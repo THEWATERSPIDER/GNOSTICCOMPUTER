@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gnostic Computer</title>
+    <style>
+        /* Base Styles */
+        body {
+            background-color: #0a0a14;
+            color: #d8d8ff;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Cybernetic Voudon-Gnosis Aesthetic */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(to bottom, #0a0a14, #131328);
+            border: 1px solid #3a3a6a;
+            box-shadow: 0 0 20px rgba(83, 56, 173, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(83, 56, 173, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(32, 196, 142, 0.1) 0%, transparent 20%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #131328;
+            border: 1px solid #3a3a6a;
+            box-shadow: 0 0 15px rgba(83, 56, 173, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #20c48e, transparent);
+            animation: headerGlow 4s infinite linear;
+        }
+
+        @keyframes headerGlow {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 8px;
+            margin: 0;
+            color: #20c48e;
+            text-shadow: 0 0 10px rgba(32, 196, 142, 0.7);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #3a3a6a;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #131328;
+            border: 1px solid #3a3a6a;
+            border-bottom: none;
+            margin-right: 5px;
+            color: #8080a0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab:hover {
+            color: #20c48e;
+        }
+
+        .tab.active {
+            color: #20c48e;
+            background-color: #1a1a32;
+            border-top: 1px solid #20c48e;
+        }
+
+        .tab.active::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #20c48e;
+            box-shadow: 0 0 10px rgba(32, 196, 142, 0.7);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: #1a1a32;
+            border: 1px solid #3a3a6a;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Form Elements */
+        input, button, select {
+            background-color: #131328;
+            border: 1px solid #3a3a6a;
+            color: #d8d8ff;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, button:focus, select:focus {
+            outline: none;
+            border-color: #20c48e;
+            box-shadow: 0 0 10px rgba(32, 196, 142, 0.3);
+        }
+
+        .full-width {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #1a1a32;
+            color: #20c48e;
+            border: 1px solid #20c48e;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background-color: #20c48e;
+            color: #0a0a14;
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(32, 196, 142, 0.8);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        button:focus::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        /* Results Display */
+        .result-box {
+            background-color: #131328;
+            border: 1px solid #3a3a6a;
+            padding: 15px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(32, 196, 142, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .result-box.active::before {
+            opacity: 1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); }
+            50% { transform: scale(1); }
+            100% { transform: scale(0.95); }
+        }
+
+        .result-title {
+            color: #20c48e;
+            border-bottom: 1px solid #3a3a6a;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .letter-breakdown {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .letter-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px 10px;
+            border: 1px solid #3a3a6a;
+            background-color: #1a1a32;
+            min-width: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .letter {
+            font-size: 1.2rem;
+            color: #20c48e;
+        }
+
+        .value {
+            font-size: 0.9rem;
+            color: #8080a0;
+        }
+
+        .total-value {
+            font-size: 1.5rem;
+            color: #d8d8ff;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        /* Reduction Display */
+        .reduction-display {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #3a3a6a;
+            background-color: #131328;
+            position: relative;
+        }
+
+        .reduction-number {
+            font-size: 3rem;
+            color: #20c48e;
+            text-shadow: 0 0 10px rgba(32, 196, 142, 0.7);
+            margin: 10px 0;
+        }
+
+        .reduction-title {
+            font-size: 1.2rem;
+            color: #d8d8ff;
+            margin-bottom: 10px;
+        }
+
+        .reduction-correspondence {
+            font-style: italic;
+            color: #8080a0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Spirit Name */
+        .spirit-name {
+            font-size: 2rem;
+            text-align: center;
+            color: #20c48e;
+            margin: 20px 0;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(32, 196, 142, 0.5);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .controls label {
+            margin-right: 10px;
+        }
+
+        /* Circuit Decoration */
+        .circuit-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+            background-image: 
+                linear-gradient(to right, transparent 49%, #20c48e 49%, #20c48e 51%, transparent 51%),
+                linear-gradient(to bottom, transparent 49%, #20c48e 49%, #20c48e 51%, transparent 51%);
+            background-size: 40px 40px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+                letter-spacing: 4px;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                margin-right: 0;
+                margin-bottom: 5px;
+                border: 1px solid #3a3a6a;
+            }
+            
+            .letter-breakdown {
+                gap: 5px;
+            }
+            
+            .letter-item {
+                min-width: 30px;
+                padding: 3px 6px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="circuit-decoration"></div>
+        
+        <div class="header">
+            <h1>GNOSTIC COMPUTER</h1>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="gematria">Angelic Gematria</div>
+            <div class="tab" data-tab="spirit">Simplified Enochian Computer</div>
+        </div>
+        
+        <div id="gematria" class="tab-content active">
+            <h2>Angelic Gematria Calculator</h2>
+            <p>Enter a word or phrase to calculate its Angelic Gematria value (A=5, B=6, C=7...)</p>
+            
+            <input type="text" id="gematria-input" placeholder="Enter word or phrase..." class="full-width">
+            
+            <div id="gematria-result" class="result-box">
+                <h3 class="result-title">Results</h3>
+                <div id="letter-breakdown" class="letter-breakdown">
+                    <!-- Letter breakdown will be inserted here -->
+                </div>
+                <div id="total-value" class="total-value">
+                    <!-- Total value will be inserted here -->
+                </div>
+                <div id="reduction-display" class="reduction-display">
+                    <div class="reduction-title">Neopythagorean Gnostic Reduction</div>
+                    <div id="reduction-number" class="reduction-number"></div>
+                    <div id="reduction-correspondence" class="reduction-correspondence"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="spirit" class="tab-content">
+            <h2>Simplified Enochian Computer</h2>
+            <p>Ask a question and make contact with the Enochian entities</p>
+            
+            <input type="text" id="question-input" placeholder="Enter your question..." class="full-width">
+            
+            <div class="controls">
+                <label for="name-length">Number of letters:</label>
+                <select id="name-length">
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5" selected>5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
+                <button id="generate-btn">Make Contact</button>
+            </div>
+            
+            <div id="spirit-result" class="result-box">
+                <div id="spirit-name" class="spirit-name">
+                    <!-- Spirit name will be inserted here -->
+                </div>
+                <div id="spirit-breakdown" class="letter-breakdown">
+                    <!-- Letter breakdown will be inserted here -->
+                </div>
+                <div id="spirit-total" class="total-value">
+                    <!-- Total value will be inserted here -->
+                </div>
+                <div id="spirit-reduction" class="reduction-display">
+                    <div class="reduction-title">Neopythagorean Gnostic Reduction</div>
+                    <div id="spirit-reduction-number" class="reduction-number"></div>
+                    <div id="spirit-reduction-correspondence" class="reduction-correspondence"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Angelic Gematria values (A=5, B=6, C=7, etc.)
+        const gematriaValues = {
+            'A': 5, 'B': 6, 'C': 7, 'D': 8, 'E': 9, 'F': 10, 'G': 11, 'H': 12, 'I': 13,
+            'J': 14, 'K': 15, 'L': 16, 'M': 17, 'N': 18, 'O': 19, 'P': 20, 'Q': 21, 'R': 22,
+            'S': 23, 'T': 24, 'U': 25, 'V': 26, 'W': 27, 'X': 28, 'Y': 29, 'Z': 30
+        };
+
+        // Neopythagorean Gnostic Reduction correspondences
+        const correspondences = {
+            1: "The Monad, The One Absolute",
+            2: "The Dyad, The Ontic Sphere, Intuition-Imagination",
+            3: "The Triad, Divine Mind, Noetic, Noetic-Noeric, Noeric",
+            4: "The Tetrad, The Ontological Sphere, \"Thought of Being,\" Archai",
+            5: "The Pentad, Cosmic Sphere, Aeons, Daemons, Logoi, Archones, Syzygies",
+            6: "The Hexad, Dialectical Sphere, Lower Logoi, Gods",
+            7: "The Heptad, Cosmological Components, Genii-Logoi, Rays",
+            8: "The Octad, Higher Planetaries (Spirits), Gnostic Magnetic Zone",
+            9: "The Ennead, Middle Planetaries, Astral Magnetic Zone"
+        };
+
+        // Tab switching functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and content
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Gematria calculation function
+        function calculateGematria(input) {
+            let total = 0;
+            let breakdown = [];
+            
+            for (let char of input.toUpperCase()) {
+                if (gematriaValues[char]) {
+                    total += gematriaValues[char];
+                    breakdown.push({ letter: char, value: gematriaValues[char] });
+                }
+            }
+            
+            return { total, breakdown };
+        }
+
+        // Neopythagorean reduction function
+        function reduceToSingleDigit(number) {
+            if (number < 10) return number;
+            
+            let sum = 0;
+            while (number > 0) {
+                sum += number % 10;
+                number = Math.floor(number / 10);
+            }
+            
+            return sum < 10 ? sum : reduceToSingleDigit(sum);
+        }
+
+        // Update gematria results
+        function updateGematriaResults(input) {
+            const result = calculateGematria(input);
+            const breakdownElement = document.getElementById('letter-breakdown');
+            const totalElement = document.getElementById('total-value');
+            const reductionNumberElement = document.getElementById('reduction-number');
+            const reductionCorrespondenceElement = document.getElementById('reduction-correspondence');
+            const resultBox = document.getElementById('gematria-result');
+            
+            // Clear previous results
+            breakdownElement.innerHTML = '';
+            
+            // Add letter breakdown
+            result.breakdown.forEach(item => {
+                const letterItem = document.createElement('div');
+                letterItem.className = 'letter-item';
+                letterItem.innerHTML = `
+                    <div class="letter">${item.letter}</div>
+                    <div class="value">${item.value}</div>
+                `;
+                breakdownElement.appendChild(letterItem);
+            });
+            
+            // Update total value
+            totalElement.textContent = `Total Value: ${result.total}`;
+            
+            // Calculate and display reduction
+            const reduction = reduceToSingleDigit(result.total);
+            reductionNumberElement.textContent = reduction;
+            reductionCorrespondenceElement.textContent = correspondences[reduction] || '';
+            
+            // Activate result box animation
+            resultBox.classList.add('active');
+            setTimeout(() => {
+                resultBox.classList.remove('active');
+            }, 1000);
+        }
+
+        // Generate spirit name
+        function generateSpiritName(length) {
+            const consonants = "BCDFGHJKLMNPQRSTVWXZ";
+            const vowels = "AEIOUY";
+            let name = "";
+            
+            // Create a pronounceable name with alternating consonants and vowels
+            for (let i = 0; i < length; i++) {
+                if (i % 2 === 0) {
+                    // Even positions get consonants
+                    name += consonants.charAt(Math.floor(Math.random() * consonants.length));
+                } else {
+                    // Odd positions get vowels
+                    name += vowels.charAt(Math.floor(Math.random() * vowels.length));
+                }
+            }
+            
+            // Ensure name doesn't end with a consonant cluster
+            if (length > 1 && !vowels.includes(name[name.length - 1]) && !vowels.includes(name[name.length - 2])) {
+                name = name.substring(0, name.length - 1) + vowels.charAt(Math.floor(Math.random() * vowels.length));
+            }
+            
+            return name;
+        }
+
+        // Update spirit name results
+        function updateSpiritNameResults(name) {
+            const nameElement = document.getElementById('spirit-name');
+            const breakdownElement = document.getElementById('spirit-breakdown');
+            const totalElement = document.getElementById('spirit-total');
+            const reductionNumberElement = document.getElementById('spirit-reduction-number');
+            const reductionCorrespondenceElement = document.getElementById('spirit-reduction-correspondence');
+            const resultBox = document.getElementById('spirit-result');
+            
+            // Calculate gematria for the spirit name
+            const result = calculateGematria(name);
+            
+            // Update name display
+            nameElement.textContent = name;
+            
+            // Clear previous breakdown
+            breakdownElement.innerHTML = '';
+            
+            // Add letter breakdown
+            result.breakdown.forEach(item => {
+                const letterItem = document.createElement('div');
+                letterItem.className = 'letter-item';
+                letterItem.innerHTML = `
+                    <div class="letter">${item.letter}</div>
+                    <div class="value">${item.value}</div>
+                `;
+                breakdownElement.appendChild(letterItem);
+            });
+            
+            // Update total value
+            totalElement.textContent = `Total Value: ${result.total}`;
+            
+            // Calculate and display reduction
+            const reduction = reduceToSingleDigit(result.total);
+            reductionNumberElement.textContent = reduction;
+            reductionCorrespondenceElement.textContent = correspondences[reduction] || '';
+            
+            // Activate result box animation
+            resultBox.classList.add('active');
+            setTimeout(() => {
+                resultBox.classList.remove('active');
+            }, 1000);
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Gematria input
+            const gematriaInput = document.getElementById('gematria-input');
+            gematriaInput.addEventListener('input', () => {
+                updateGematriaResults(gematriaInput.value);
+            });
+            
+            // Spirit name generator
+            const generateBtn = document.getElementById('generate-btn');
+            generateBtn.addEventListener('click', () => {
+                const length = parseInt(document.getElementById('name-length').value);
+                const spiritName = generateSpiritName(length);
+                updateSpiritNameResults(spiritName);
+            });
+            
+            // Generate initial spirit name
+            const initialSpiritName = generateSpiritName(5);
+            updateSpiritNameResults(initialSpiritName);
+        });
+    </script>
+</body>
+</html>
