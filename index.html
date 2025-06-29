@@ -332,6 +332,37 @@
             margin-right: 10px;
         }
 
+        /* Yes/No Response */
+        .yes-no-response {
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #3a3a6a;
+            background-color: #131328;
+            color: #20c48e;
+            text-shadow: 0 0 10px rgba(32, 196, 142, 0.7);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .yes-no-response.active {
+            opacity: 1;
+            animation: pulseText 2s infinite;
+        }
+
+        @keyframes pulseText {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
+        .response-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
         /* Circuit Decoration */
         .circuit-decoration {
             position: absolute;
@@ -346,6 +377,24 @@
                 linear-gradient(to right, transparent 49%, #20c48e 49%, #20c48e 51%, transparent 51%),
                 linear-gradient(to bottom, transparent 49%, #20c48e 49%, #20c48e 51%, transparent 51%);
             background-size: 40px 40px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            border-top: 1px solid #3a3a6a;
+        }
+
+        .footer a {
+            color: #20c48e;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer a:hover {
+            text-shadow: 0 0 10px rgba(32, 196, 142, 0.7);
         }
 
         /* Responsive Design */
@@ -400,7 +449,7 @@
         
         <div id="gematria" class="tab-content active">
             <h2>Angelic Gematria Calculator</h2>
-            <p>Enter a word or phrase to calculate its Angelic Gematria value (A=5, B=6, C=7...)</p>
+            <p>Adapted from Michael Bertiaux's Voudon Gnostic Workbook</p>
             
             <input type="text" id="gematria-input" placeholder="Enter word or phrase..." class="full-width">
             
@@ -429,6 +478,8 @@
             <div class="controls">
                 <label for="name-length">Number of letters:</label>
                 <select id="name-length">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5" selected>5</option>
@@ -436,8 +487,10 @@
                     <option value="7">7</option>
                     <option value="8">8</option>
                     <option value="9">9</option>
+                    <option value="random">Random (1-9)</option>
                 </select>
                 <button id="generate-btn">Make Contact</button>
+                <button id="yes-no-btn">Yes/No Response</button>
             </div>
             
             <div id="spirit-result" class="result-box">
@@ -456,6 +509,14 @@
                     <div id="spirit-reduction-correspondence" class="reduction-correspondence"></div>
                 </div>
             </div>
+            
+            <div id="yes-no-result" class="yes-no-response">
+                <!-- Yes/No response will be inserted here -->
+            </div>
+        </div>
+        
+        <div class="footer">
+            <a href="mailto:listeningpostalphajournal@gmail.com">listeningpostalphajournal@gmail.com</a>
         </div>
     </div>
 
@@ -592,6 +653,13 @@
             const reductionNumberElement = document.getElementById('spirit-reduction-number');
             const reductionCorrespondenceElement = document.getElementById('spirit-reduction-correspondence');
             const resultBox = document.getElementById('spirit-result');
+            const yesNoResult = document.getElementById('yes-no-result');
+            
+            // Hide yes/no result
+            yesNoResult.classList.remove('active');
+            
+            // Show spirit result
+            resultBox.style.display = 'block';
             
             // Calculate gematria for the spirit name
             const result = calculateGematria(name);
@@ -628,6 +696,30 @@
             }, 1000);
         }
 
+        // Generate Yes/No response
+        function generateYesNoResponse() {
+            const yesNoResult = document.getElementById('yes-no-result');
+            const resultBox = document.getElementById('spirit-result');
+            
+            // Hide spirit result
+            resultBox.style.display = 'none';
+            
+            // Generate random response
+            const response = Math.random() < 0.5 ? "YES" : "NO";
+            
+            // Display response
+            yesNoResult.textContent = response;
+            yesNoResult.classList.add('active');
+            
+            // Add dramatic delay effect
+            setTimeout(() => {
+                yesNoResult.classList.remove('active');
+                setTimeout(() => {
+                    yesNoResult.classList.add('active');
+                }, 300);
+            }, 500);
+        }
+
         // Event listeners
         document.addEventListener('DOMContentLoaded', () => {
             // Gematria input
@@ -639,9 +731,24 @@
             // Spirit name generator
             const generateBtn = document.getElementById('generate-btn');
             generateBtn.addEventListener('click', () => {
-                const length = parseInt(document.getElementById('name-length').value);
+                let length;
+                const lengthSelect = document.getElementById('name-length');
+                
+                if (lengthSelect.value === 'random') {
+                    // Generate random length between 1 and 9
+                    length = Math.floor(Math.random() * 9) + 1;
+                } else {
+                    length = parseInt(lengthSelect.value);
+                }
+                
                 const spiritName = generateSpiritName(length);
                 updateSpiritNameResults(spiritName);
+            });
+            
+            // Yes/No response generator
+            const yesNoBtn = document.getElementById('yes-no-btn');
+            yesNoBtn.addEventListener('click', () => {
+                generateYesNoResponse();
             });
             
             // Generate initial spirit name
