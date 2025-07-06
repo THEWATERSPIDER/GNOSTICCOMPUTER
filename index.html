@@ -363,6 +363,139 @@
             margin-top: 20px;
         }
 
+        /* Yuggothian Oracle Styles */
+        .oracle-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .radio-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .radio-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .dice-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 20px 0;
+        }
+        
+        .dice {
+            width: 80px;
+            height: 80px;
+            background-color: #131328;
+            border: 1px solid #3a3a6a;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 0 10px rgba(32, 196, 142, 0.3);
+            overflow: hidden;
+        }
+        
+        .dice-face {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        
+        .dice-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #20c48e;
+            border-radius: 50%;
+            margin: auto;
+        }
+        
+        /* Dice dot positions for each value */
+        .dice-1 .dice-dot:nth-child(5) { display: block; }
+        .dice-1 .dice-dot:not(:nth-child(5)) { display: none; }
+        
+        .dice-2 .dice-dot:nth-child(1),
+        .dice-2 .dice-dot:nth-child(9) { display: block; }
+        .dice-2 .dice-dot:not(:nth-child(1)):not(:nth-child(9)) { display: none; }
+        
+        .dice-3 .dice-dot:nth-child(1),
+        .dice-3 .dice-dot:nth-child(5),
+        .dice-3 .dice-dot:nth-child(9) { display: block; }
+        .dice-3 .dice-dot:not(:nth-child(1)):not(:nth-child(5)):not(:nth-child(9)) { display: none; }
+        
+        .dice-4 .dice-dot:nth-child(1),
+        .dice-4 .dice-dot:nth-child(3),
+        .dice-4 .dice-dot:nth-child(7),
+        .dice-4 .dice-dot:nth-child(9) { display: block; }
+        .dice-4 .dice-dot:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(7)):not(:nth-child(9)) { display: none; }
+        
+        .dice-5 .dice-dot:nth-child(1),
+        .dice-5 .dice-dot:nth-child(3),
+        .dice-5 .dice-dot:nth-child(5),
+        .dice-5 .dice-dot:nth-child(7),
+        .dice-5 .dice-dot:nth-child(9) { display: block; }
+        .dice-5 .dice-dot:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(5)):not(:nth-child(7)):not(:nth-child(9)) { display: none; }
+        
+        .dice-6 .dice-dot:nth-child(1),
+        .dice-6 .dice-dot:nth-child(3),
+        .dice-6 .dice-dot:nth-child(4),
+        .dice-6 .dice-dot:nth-child(6),
+        .dice-6 .dice-dot:nth-child(7),
+        .dice-6 .dice-dot:nth-child(9) { display: block; }
+        .dice-6 .dice-dot:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)):not(:nth-child(6)):not(:nth-child(7)):not(:nth-child(9)) { display: none; }
+        
+        @keyframes roll {
+            0% { transform: translateY(-300%); }
+            100% { transform: translateY(0); }
+        }
+        
+        .rolling .dice-face {
+            animation: roll 0.5s ease-out;
+        }
+        
+        .dice-values {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        
+        .dice-total {
+            font-size: 24px;
+            text-align: center;
+            margin-top: 10px;
+            color: #20c48e;
+        }
+        
+        .correspondence-item {
+            margin: 5px 0;
+        }
+        
+        .color-display {
+            display: flex;
+            margin-top: 15px;
+            height: 100px;
+        }
+        
+        .color-box {
+            flex: 1;
+            height: 100px;
+            border: 1px solid #3a3a6a;
+        }
+
         /* Circuit Decoration */
         .circuit-decoration {
             position: absolute;
@@ -431,6 +564,20 @@
                 flex-direction: column;
                 align-items: stretch;
             }
+            
+            .dice-container {
+                gap: 20px;
+            }
+            
+            .dice {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .dice-dot {
+                width: 8px;
+                height: 8px;
+            }
         }
     </style>
 </head>
@@ -445,6 +592,7 @@
         <div class="tabs">
             <div class="tab active" data-tab="gematria">Angelic Gematria</div>
             <div class="tab" data-tab="spirit">Simplified Enochian Computer</div>
+            <div class="tab" data-tab="oracle">Yuggothian Oracle</div>
         </div>
         
         <div id="gematria" class="tab-content active">
@@ -515,6 +663,85 @@
             </div>
         </div>
         
+        <div id="oracle" class="tab-content">
+            <h2>Yuggothian Oracle</h2>
+            <p>Consult the oracle for guidance from beyond</p>
+            
+            <div class="oracle-controls">
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="oracle-type" value="ultra" checked>
+                        Ultra-Yuggothian
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="oracle-type" value="trans">
+                        Trans-Yuggothian
+                    </label>
+                </div>
+                
+                <button id="roll-button">Roll the Dice</button>
+            </div>
+            
+            <div class="dice-container">
+                <div id="dice1" class="dice">
+                    <div class="dice-face dice-1">
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                    </div>
+                </div>
+                <div id="dice2" class="dice">
+                    <div class="dice-face dice-1">
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                        <div class="dice-dot"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dice-values">
+                <span id="dice1-value">-</span> + <span id="dice2-value">-</span> = 
+            </div>
+            <div class="dice-total" id="dice-total">-</div>
+            
+            <div class="result-container">
+                <h3 class="result-title">Oracle Result</h3>
+                <div class="result-content">
+                    <div class="correspondence-item">
+                        <span class="result-label">Element:</span>
+                        <span id="element-result" class="result-value">-</span>
+                    </div>
+                    
+                    <div id="tree-item" class="correspondence-item">
+                        <span class="result-label">Tree of Life / Power Zone:</span>
+                        <span id="tree-result" class="result-value">-</span>
+                    </div>
+                    
+                    <div class="correspondence-item">
+                        <span class="result-label">Colors:</span>
+                        <span id="color-result" class="result-value">-</span>
+                    </div>
+                    
+                    <div class="color-display">
+                        <div id="color-box1" class="color-box"></div>
+                        <div id="color-box2" class="color-box"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="footer">
             <a href="mailto:listeningpostalphajournal@gmail.com">listeningpostalphajournal@gmail.com</a>
         </div>
@@ -539,6 +766,146 @@
             7: "The Heptad, Cosmological Components, Genii-Logoi, Rays, Copper Metal, Syzygy, Sexual Polarity",
             8: "The Octad, Higher Planetaries (Spirits), Gnostic Magnetic Zone, Iron Metal, Female Power, Kalas",
             9: "The Ennead, Middle Planetaries, Astral Magnetic Zone, Materialization"
+        };
+        
+        // Ultra-Yuggothian correspondences
+        const ultraYuggothian = {
+            2: { 
+                element: "EARTH OF WATER", 
+                tree: "Kether = Pluto",
+                colors: "Blue Green:::Dark Red",
+                colorCodes: ["#088F8F", "#8B0000"]
+            },
+            3: { 
+                element: "AIR OF WATER", 
+                tree: "Chokmah = Neptune",
+                colors: "Blue Green::::Orange",
+                colorCodes: ["#088F8F", "#FFA500"]
+            },
+            4: { 
+                element: "WATER OF AIR", 
+                tree: "Daath = Uranus",
+                colors: "Blue::::Magenta",
+                colorCodes: ["#0000FF", "#FF00FF"]
+            },
+            5: { 
+                element: "FIRE OF EARTH", 
+                tree: "Binah = Saturn",
+                colors: "Brown::::Purple",
+                colorCodes: ["#5D4037", "#800080"]
+            },
+            6: { 
+                element: "EARTH OF FIRE", 
+                tree: "Chesed = Jupiter",
+                colors: "Grey::::Dark Red",
+                colorCodes: ["#808080", "#8B0000"]
+            },
+            7: { 
+                element: "WATER OF FIRE", 
+                tree: "Geburah = Mars",
+                colors: "Grey::::Magenta",
+                colorCodes: ["#808080", "#FF00FF"]
+            },
+            8: { 
+                element: "AIR OF FIRE", 
+                tree: "Tiphareth = Sun",
+                colors: "Grey::::Orange",
+                colorCodes: ["#808080", "#FFA500"]
+            },
+            9: { 
+                element: "EARTH OF AIR / WATER OF EARTH", 
+                tree: "Netzach = Venus",
+                colors: "Blue:::Dark Red / Brown:::Magenta",
+                colorCodes: ["#0000FF", "#8B0000"] // Default to first option
+            },
+            10: { 
+                element: "FIRE OF AIR", 
+                tree: "Hod = Mercury",
+                colors: "Blue:::Purple",
+                colorCodes: ["#0000FF", "#800080"]
+            },
+            11: { 
+                element: "FIRE OF WATER", 
+                tree: "Yesod = Moon",
+                colors: "Blue Green:::Purple",
+                colorCodes: ["#088F8F", "#800080"]
+            },
+            12: { 
+                element: "AIR OF EARTH", 
+                tree: "Malkuth = Earth",
+                colors: "Brown:::Orange",
+                colorCodes: ["#5D4037", "#FFA500"]
+            }
+        };
+        
+        // Trans-Yuggothian correspondences
+        const transYuggothian = {
+            2: { 
+                element: "EARTH OF WATER", 
+                tree: "Thaumiel",
+                colors: "Blue Green:::Dark Red",
+                colorCodes: ["#088F8F", "#8B0000"]
+            },
+            3: { 
+                element: "AIR OF WATER", 
+                tree: "Ghogiel",
+                colors: "Blue Green::::Orange",
+                colorCodes: ["#088F8F", "#FFA500"]
+            },
+            4: { 
+                element: "WATER OF AIR", 
+                tree: "Satariel",
+                colors: "Blue::::Magenta",
+                colorCodes: ["#0000FF", "#FF00FF"]
+            },
+            5: { 
+                element: "FIRE OF EARTH", 
+                tree: "Agshekeloh",
+                colors: "Brown::::Purple",
+                colorCodes: ["#5D4037", "#800080"]
+            },
+            6: { 
+                element: "EARTH OF FIRE", 
+                tree: "Golohab",
+                colors: "Grey::::Dark Red",
+                colorCodes: ["#808080", "#8B0000"]
+            },
+            7: { 
+                element: "WATER OF FIRE", 
+                tree: "Tagiriron",
+                colors: "Grey::::Magenta",
+                colorCodes: ["#808080", "#FF00FF"]
+            },
+            8: { 
+                element: "AIR OF FIRE", 
+                tree: "Gharab Tzerek",
+                colors: "Grey::::Orange",
+                colorCodes: ["#808080", "#FFA500"]
+            },
+            9: { 
+                element: "EARTH OF AIR / WATER OF EARTH", 
+                tree: "Samael",
+                colors: "Blue:::Dark Red / Brown:::Magenta",
+                colorCodes: ["#0000FF", "#8B0000"] // Default to first option
+            },
+            10: { 
+                element: "FIRE OF AIR", 
+                tree: "Gamaliel",
+                colors: "Blue:::Purple",
+                colorCodes: ["#0000FF", "#800080"]
+            },
+            11: { 
+                element: "FIRE OF WATER", 
+                tree: "Lilith",
+                colors: "Blue Green:::Purple",
+                colorCodes: ["#088F8F", "#800080"]
+            },
+            12: { 
+                element: "AIR OF EARTH", 
+                tree: "Choronzon",
+                colors: "Brown:::Orange",
+                colorCodes: ["#5D4037", "#FFA500"]
+            }
         };
 
         // Tab switching functionality
@@ -719,6 +1086,54 @@
                 }, 300);
             }, 500);
         }
+        
+        // Function to update dice face
+        function updateDiceFace(diceElement, value) {
+            const diceFace = diceElement.querySelector('.dice-face');
+            
+            // Remove all dice classes
+            diceFace.classList.remove('dice-1', 'dice-2', 'dice-3', 'dice-4', 'dice-5', 'dice-6');
+            
+            // Add the appropriate class for the value
+            diceFace.classList.add(`dice-${value}`);
+            
+            // Add rolling animation
+            diceFace.classList.add('rolling');
+            
+            // Remove animation class after it completes
+            setTimeout(() => {
+                diceFace.classList.remove('rolling');
+            }, 500);
+        }
+        
+        // Simulate dice rolling animation
+        function rollDiceAnimation(callback) {
+            const dice1 = document.getElementById('dice1');
+            const dice2 = document.getElementById('dice2');
+            const duration = 1000; // Total animation duration in ms
+            const steps = 10; // Number of "rolls" before settling
+            const interval = duration / steps;
+            
+            let count = 0;
+            
+            const rollInterval = setInterval(() => {
+                // Generate random values for animation
+                const randomValue1 = Math.floor(Math.random() * 6) + 1;
+                const randomValue2 = Math.floor(Math.random() * 6) + 1;
+                
+                // Update dice faces
+                updateDiceFace(dice1, randomValue1);
+                updateDiceFace(dice2, randomValue2);
+                
+                count++;
+                
+                if (count >= steps) {
+                    clearInterval(rollInterval);
+                    // Call the callback with the final values
+                    callback();
+                }
+            }, interval);
+        }
 
         // Event listeners
         document.addEventListener('DOMContentLoaded', () => {
@@ -751,6 +1166,59 @@
                 generateYesNoResponse();
             });
             
+            // Yuggothian Oracle dice roller
+            const rollButton = document.getElementById('roll-button');
+            rollButton.addEventListener('click', function() {
+                // Get selected oracle type
+                const oracleType = document.querySelector('input[name="oracle-type"]:checked').value;
+                
+                // Disable the button during animation
+                this.disabled = true;
+                
+                // Start the rolling animation
+                rollDiceAnimation(() => {
+                    // Generate the actual dice values
+                    const dice1Value = Math.floor(Math.random() * 6) + 1;
+                    const dice2Value = Math.floor(Math.random() * 6) + 1;
+                    const total = dice1Value + dice2Value;
+                    
+                    // Update dice display with final values
+                    updateDiceFace(document.getElementById('dice1'), dice1Value);
+                    updateDiceFace(document.getElementById('dice2'), dice2Value);
+                    
+                    // Update text values
+                    document.getElementById('dice1-value').textContent = dice1Value;
+                    document.getElementById('dice2-value').textContent = dice2Value;
+                    document.getElementById('dice-total').textContent = total;
+                    
+                    // Get corresponding data based on oracle type
+                    const correspondences = oracleType === 'ultra' ? ultraYuggothian : transYuggothian;
+                    const result = correspondences[total];
+                    
+                    // Special case for 9 - choose colors based on dice combination
+                    if (total === 9) {
+                        if ((dice1Value === 8 && dice2Value === 1) || (dice1Value === 1 && dice2Value === 8) ||
+                            (dice1Value === 7 && dice2Value === 2) || (dice1Value === 2 && dice2Value === 7)) {
+                            // First option: Blue:::Dark Red
+                            result.colorCodes = ["#0000FF", "#8B0000"];
+                        } else {
+                            // Second option: Brown:::Magenta
+                            result.colorCodes = ["#5D4037", "#FF00FF"];
+                        }
+                    }
+                    
+                    // Update result display
+                    document.getElementById('element-result').textContent = result.element;
+                    document.getElementById('tree-result').textContent = result.tree;
+                    document.getElementById('color-result').textContent = result.colors;
+                    document.getElementById('color-box1').style.backgroundColor = result.colorCodes[0];
+                    document.getElementById('color-box2').style.backgroundColor = result.colorCodes[1];
+                    
+                    // Re-enable the button
+                    this.disabled = false;
+                });
+            });
+            
             // Generate initial spirit name
             const initialSpiritName = generateSpiritName(5);
             updateSpiritNameResults(initialSpiritName);
@@ -758,3 +1226,4 @@
     </script>
 </body>
 </html>
+
